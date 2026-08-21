@@ -85,9 +85,10 @@ resource "aws_wafv2_web_acl_logging_configuration" "pass" {
   resource_arn            = aws_wafv2_web_acl.pass.arn
 }
 
-# Optional ALB association
+# Optional ALB association — created when create_failing_resources is set
+# (alb_arn is always provided from root; count avoids apply-time dependency error)
 resource "aws_wafv2_web_acl_association" "pass" {
-  count = var.alb_arn != "" ? 1 : 0
+  count = var.create_failing_resources ? 1 : 0
 
   resource_arn = var.alb_arn
   web_acl_arn  = aws_wafv2_web_acl.pass.arn

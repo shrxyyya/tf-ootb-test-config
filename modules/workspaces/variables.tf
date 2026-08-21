@@ -24,3 +24,9 @@ variable "kms_key_arn" {
   description = "ARN of the KMS key used for WorkSpaces volume encryption."
   type        = string
 }
+
+variable "workspaces_bundle_id" {
+  description = "WorkSpaces bundle ID to use for workspace instances. Defaults to Standard with Windows 10."
+  type        = string
+  default     = "wsb-bh8rsxt14"
+}

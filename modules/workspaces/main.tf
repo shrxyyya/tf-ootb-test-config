@@ -29,10 +29,6 @@ resource "aws_directory_service_directory" "main" {
   tags = merge(var.tags, { Name = "regression-test-workspaces-ad" })
 }
 
-data "aws_workspaces_bundle" "windows" {
-  owner = "AMAZON"
-  name  = "Standard with Windows 10 (Server 2019)"
-}
 
 # ---------------------------------------------------------------------------
 # WorkSpaces.1 + WorkSpaces.2 — volumes encrypted at rest
@@ -41,7 +37,7 @@ data "aws_workspaces_bundle" "windows" {
 
 resource "aws_workspaces_workspace" "pass" {
   directory_id = aws_directory_service_directory.main.id
-  bundle_id    = data.aws_workspaces_bundle.windows.id
+  bundle_id    = var.workspaces_bundle_id
   user_name    = "testuser"
 
   root_volume_encryption_enabled = true
@@ -67,7 +63,7 @@ resource "aws_workspaces_workspace" "root_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   directory_id = aws_directory_service_directory.main.id
-  bundle_id    = data.aws_workspaces_bundle.windows.id
+  bundle_id    = var.workspaces_bundle_id
   user_name    = "testuser-root-fail"
 
   root_volume_encryption_enabled = false # intentional violation
@@ -97,7 +93,7 @@ resource "aws_workspaces_workspace" "user_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   directory_id = aws_directory_service_directory.main.id
-  bundle_id    = data.aws_workspaces_bundle.windows.id
+  bundle_id    = var.workspaces_bundle_id
   user_name    = "testuser-user-fail"
 
   root_volume_encryption_enabled = true

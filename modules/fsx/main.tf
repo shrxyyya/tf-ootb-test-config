@@ -22,7 +22,7 @@ resource "aws_fsx_openzfs_file_system" "pass" {
   subnet_ids          = slice(var.private_subnet_ids, 0, 2)
   deployment_type     = "MULTI_AZ_1"
   preferred_subnet_id = var.private_subnet_ids[0]
-  throughput_capacity = 64
+  throughput_capacity = 160
   kms_key_id          = var.kms_key_arn
 
   copy_tags_to_backups = true
@@ -42,7 +42,7 @@ resource "aws_fsx_openzfs_file_system" "tags_fail" {
   subnet_ids          = slice(var.private_subnet_ids, 0, 2)
   deployment_type     = "MULTI_AZ_1"
   preferred_subnet_id = var.private_subnet_ids[0]
-  throughput_capacity = 64
+  throughput_capacity = 160
   kms_key_id          = var.kms_key_arn
 
   copy_tags_to_backups = false # intentional violation
