@@ -88,7 +88,6 @@ resource "aws_neptune_cluster" "pass" {
   engine_version = "1.3.1.0"
 
   storage_encrypted = true
-  kms_key_id        = var.kms_key_arn
 
   deletion_protection = true
 
@@ -180,7 +179,6 @@ resource "aws_neptune_cluster" "audit_fail" {
   engine_version = "1.3.1.0"
 
   storage_encrypted = true
-  kms_key_id        = var.kms_key_arn
 
   deletion_protection = true
 
@@ -222,7 +220,6 @@ resource "aws_neptune_cluster" "deletion_fail" {
   engine_version = "1.3.1.0"
 
   storage_encrypted = true
-  kms_key_id        = var.kms_key_arn
 
   deletion_protection = false # intentional violation
 
@@ -264,7 +261,6 @@ resource "aws_neptune_cluster" "backup_fail" {
   engine_version = "1.3.1.0"
 
   storage_encrypted = true
-  kms_key_id        = var.kms_key_arn
 
   deletion_protection = true
 
@@ -306,7 +302,6 @@ resource "aws_neptune_cluster" "auth_fail" {
   engine_version = "1.3.1.0"
 
   storage_encrypted = true
-  kms_key_id        = var.kms_key_arn
 
   deletion_protection = true
 
@@ -348,7 +343,6 @@ resource "aws_neptune_cluster" "tags_fail" {
   engine_version = "1.3.1.0"
 
   storage_encrypted = true
-  kms_key_id        = var.kms_key_arn
 
   deletion_protection = true
 

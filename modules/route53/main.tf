@@ -1,8 +1,9 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      version = ">= 5.0"
+      source                = "hashicorp/aws"
+      version               = "~> 5.0"
+      configuration_aliases = [aws.us_east_1]
     }
     # Route53 query logs MUST be delivered to CloudWatch Logs in us-east-1
     # regardless of the deployment region. The aws.us_east_1 alias is
@@ -35,7 +36,7 @@ resource "aws_cloudwatch_log_group" "dns" {
 }
 
 # Resource policy allowing Route53 to write to the log group.
-resource "aws_cloudwatch_resource_policy" "route53_dns_log" {
+resource "aws_cloudwatch_log_resource_policy" "route53_dns_log" {
   provider = aws.us_east_1
 
   policy_name = "regression-test-route53-query-logging"
@@ -57,7 +58,7 @@ resource "aws_cloudwatch_resource_policy" "route53_dns_log" {
 }
 
 resource "aws_route53_query_log" "pass" {
-  depends_on = [aws_cloudwatch_resource_policy.route53_dns_log]
+  depends_on = [aws_cloudwatch_log_resource_policy.route53_dns_log]
 
   cloudwatch_log_group_arn = aws_cloudwatch_log_group.dns.arn
   zone_id                  = aws_route53_zone.pass.zone_id

@@ -13,6 +13,7 @@ terraform {
 # ---------------------------------------------------------------------------
 
 resource "aws_connect_instance" "pass" {
+  instance_alias                   = "regression-test-pass"
   identity_management_type         = "CONNECT_MANAGED"
   inbound_calls_enabled            = true
   outbound_calls_enabled           = true
@@ -32,6 +33,7 @@ resource "aws_connect_instance" "pass" {
 resource "aws_connect_instance" "logging_fail" {
   count = var.create_failing_resources ? 1 : 0
 
+  instance_alias                   = "regression-test-logging-fail"
   identity_management_type         = "CONNECT_MANAGED"
   inbound_calls_enabled            = true
   outbound_calls_enabled           = true

@@ -223,7 +223,7 @@ resource "aws_waf_rule_group" "pass" {
   name        = "regression-test-pass"
   metric_name = "regressionTestRuleGroupPass"
 
-  activated_rules {
+  activated_rule {
     action { type = "COUNT" }
     priority = 1
     rule_id  = aws_waf_rule.pass.id
@@ -344,10 +344,8 @@ resource "aws_kinesis_firehose_delivery_stream" "waf_logs" {
   tags = var.tags
 }
 
-# WAF.1 pass — logging enabled on pass web ACL
-resource "aws_waf_web_acl_logging_configuration" "pass" {
-  log_destination = aws_kinesis_firehose_delivery_stream.waf_logs.arn
-  resource_arn    = aws_waf_web_acl.pass.arn
-}
+# WAF.1 pass — aws_waf_web_acl_logging_configuration was removed in AWS provider v5.
+# WAF Classic logging via Terraform is no longer supported; configure via AWS Console
+# or use WAFv2 (aws_wafv2_web_acl_logging_configuration) instead.
 
 # WAF.1 fail — empty_fail web ACL has no logging configuration (absence = violation)

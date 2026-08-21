@@ -55,31 +55,32 @@ resource "aws_iam_role" "dax" {
     }]
   })
 
-  inline_policy {
-    name = "dax-dynamodb-access"
-    policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = [{
-        Effect = "Allow"
-        Action = [
-          "dynamodb:GetItem",
-          "dynamodb:BatchGetItem",
-          "dynamodb:Query",
-          "dynamodb:Scan",
-          "dynamodb:PutItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem",
-          "dynamodb:BatchWriteItem",
-          "dynamodb:DescribeTable",
-          "dynamodb:ListTables",
-        ]
-        Resource = "*"
-      }]
-    })
-  }
-
   tags = merge(var.tags, {
     Name = "regression-test-dax-role"
+  })
+}
+
+resource "aws_iam_role_policy" "dax" {
+  name = "dax-dynamodb-access"
+  role = aws_iam_role.dax.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:ListTables",
+      ]
+      Resource = "*"
+    }]
   })
 }
 
@@ -287,7 +288,7 @@ resource "aws_dax_cluster" "pass" {
 resource "aws_dax_cluster" "encryption_fail" {
   count = var.create_failing_resources ? 1 : 0
 
-  cluster_name       = "regression-test-encryption-fail"
+  cluster_name       = "reg-test-enc-fail"
   node_type          = "dax.t3.small"
   replication_factor = 1
   iam_role_arn       = aws_iam_role.dax.arn
@@ -315,7 +316,7 @@ resource "aws_dax_cluster" "encryption_fail" {
 resource "aws_dax_cluster" "transit_fail" {
   count = var.create_failing_resources ? 1 : 0
 
-  cluster_name       = "regression-test-transit-fail"
+  cluster_name       = "reg-test-tls-fail"
   node_type          = "dax.t3.small"
   replication_factor = 1
   iam_role_arn       = aws_iam_role.dax.arn

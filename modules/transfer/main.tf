@@ -130,6 +130,7 @@ resource "aws_transfer_server" "ftp_fail" {
 resource "aws_transfer_connector" "pass" {
   url          = "sftp://transfer.regression.test.internal"
   logging_role = aws_iam_role.transfer.arn
+  access_role  = aws_iam_role.transfer.arn
 
   sftp_config {
     user_secret_id = "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:regression-test-transfer-key"
@@ -145,7 +146,8 @@ resource "aws_transfer_connector" "pass" {
 resource "aws_transfer_connector" "logging_fail" {
   count = var.create_failing_resources ? 1 : 0
 
-  url = "sftp://transfer.regression.test.internal"
+  url         = "sftp://transfer.regression.test.internal"
+  access_role = aws_iam_role.transfer.arn
   # logging_role intentionally omitted — intentional violation
 
   sftp_config {

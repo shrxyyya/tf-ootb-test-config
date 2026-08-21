@@ -200,7 +200,7 @@ resource "aws_default_security_group" "pass" {
 # pass: allows 443 inbound, 80 redirect inbound, full egress; no 22/3389
 resource "aws_security_group" "app_pass" {
   name        = "ec2-app-sg-pass"
-  description = "Web application SG — no SSH/RDP ingress"
+  description = "Web application SG - no SSH/RDP ingress"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -238,7 +238,7 @@ resource "aws_security_group" "app_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   name        = "ec2-app-sg-fail"
-  description = "Web application SG with SSH open — intentional violation"
+  description = "Web application SG with SSH open - intentional violation"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -258,7 +258,7 @@ resource "aws_security_group" "app_fail" {
   }
 
   ingress {
-    description = "SSH from internet — intentional violation"
+    description = "SSH from internet - intentional violation"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"

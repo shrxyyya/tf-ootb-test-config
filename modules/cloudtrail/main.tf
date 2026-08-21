@@ -59,6 +59,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "trail_logs" {
   rule {
     id     = "audit-retention"
     status = "Enabled"
+    filter {}
 
     transition {
       days          = 90
@@ -177,6 +178,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "trail_access_logs" {
   rule {
     id     = "expire-access-logs"
     status = "Enabled"
+    filter {}
 
     expiration {
       days = 90

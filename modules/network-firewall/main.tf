@@ -64,7 +64,7 @@ resource "aws_networkfirewall_rule_group" "pass" {
 #              stateless_rule_group_reference present
 # ---------------------------------------------------------------------------
 
-resource "aws_networkfirewall_policy" "pass" {
+resource "aws_networkfirewall_firewall_policy" "pass" {
   name = "regression-test-pass"
 
   firewall_policy {
@@ -87,7 +87,7 @@ resource "aws_networkfirewall_policy" "pass" {
 
 resource "aws_networkfirewall_firewall" "pass" {
   name                = "regression-test-pass"
-  firewall_policy_arn = aws_networkfirewall_policy.pass.arn
+  firewall_policy_arn = aws_networkfirewall_firewall_policy.pass.arn
   vpc_id              = var.vpc_id
 
   delete_protection                 = true
@@ -136,7 +136,7 @@ resource "aws_networkfirewall_firewall" "deletion_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   name                = "regression-test-deletion-fail"
-  firewall_policy_arn = aws_networkfirewall_policy.pass.arn
+  firewall_policy_arn = aws_networkfirewall_firewall_policy.pass.arn
   vpc_id              = var.vpc_id
 
   delete_protection        = false # intentional violation
@@ -161,7 +161,7 @@ resource "aws_networkfirewall_firewall" "subnet_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   name                = "regression-test-subnet-fail"
-  firewall_policy_arn = aws_networkfirewall_policy.pass.arn
+  firewall_policy_arn = aws_networkfirewall_firewall_policy.pass.arn
   vpc_id              = var.vpc_id
 
   delete_protection        = true
@@ -183,7 +183,7 @@ resource "aws_networkfirewall_firewall" "subnet_fail" {
 # (both full packets and fragmented packets fail simultaneously)
 # ---------------------------------------------------------------------------
 
-resource "aws_networkfirewall_policy" "action_fail" {
+resource "aws_networkfirewall_firewall_policy" "action_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   name = "regression-test-action-fail"
@@ -204,7 +204,7 @@ resource "aws_networkfirewall_policy" "action_fail" {
 # NetworkFirewall.3 — fail: policy with no rule group reference
 # ---------------------------------------------------------------------------
 
-resource "aws_networkfirewall_policy" "norule_fail" {
+resource "aws_networkfirewall_firewall_policy" "norule_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   name = "regression-test-norule-fail"

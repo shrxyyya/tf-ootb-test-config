@@ -66,6 +66,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "logs" {
   rule {
     id     = "expire-logs"
     status = "Enabled"
+    filter {}
 
     expiration {
       days = 90
@@ -128,6 +129,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "pass" {
   rule {
     id     = "transition-and-expire"
     status = "Enabled"
+    filter {}
 
     transition {
       days          = 30
@@ -398,9 +400,4 @@ resource "aws_s3_access_point" "fail" {
     ignore_public_acls      = false
     restrict_public_buckets = false
   }
-
-  tags = merge(var.tags, {
-    compliance_test = "intentional_violation"
-    controls        = "S3.19"
-  })
 }

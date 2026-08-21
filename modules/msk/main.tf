@@ -105,7 +105,7 @@ resource "aws_msk_cluster" "pass" {
     }
   }
 
-  logging {
+  logging_info {
     broker_logs {
       cloudwatch_logs {
         enabled   = true
@@ -168,7 +168,7 @@ resource "aws_msk_cluster" "transit_fail" {
     }
   }
 
-  logging {
+  logging_info {
     broker_logs {
       cloudwatch_logs {
         enabled   = true

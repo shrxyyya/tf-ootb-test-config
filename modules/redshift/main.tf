@@ -120,7 +120,7 @@ resource "aws_redshift_cluster" "pass" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted  = true
@@ -138,15 +138,16 @@ resource "aws_redshift_cluster" "pass" {
 
   automated_snapshot_retention_period = 7
 
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
-
   tags = merge(var.tags, {
     Name = "regression-test-pass"
   })
+}
+
+resource "aws_redshift_logging" "pass" {
+  cluster_identifier   = aws_redshift_cluster.pass.id
+  log_destination_type = "s3"
+  bucket_name          = aws_s3_bucket.audit_logs.bucket
+  s3_key_prefix        = "redshift/"
 }
 
 # ---------------------------------------------------------------------------
@@ -162,7 +163,7 @@ resource "aws_redshift_cluster" "public_fail" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted  = true
@@ -179,12 +180,6 @@ resource "aws_redshift_cluster" "public_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.pass.name
 
   automated_snapshot_retention_period = 7
-
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-public-fail"
@@ -206,7 +201,7 @@ resource "aws_redshift_cluster" "encrypted_fail" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted = false # intentional violation
@@ -222,12 +217,6 @@ resource "aws_redshift_cluster" "encrypted_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.pass.name
 
   automated_snapshot_retention_period = 7
-
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-encrypted-fail"
@@ -249,7 +238,7 @@ resource "aws_redshift_cluster" "ssl_fail" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted  = true
@@ -266,12 +255,6 @@ resource "aws_redshift_cluster" "ssl_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.ssl_fail.name # intentional violation
 
   automated_snapshot_retention_period = 7
-
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-ssl-fail"
@@ -293,7 +276,7 @@ resource "aws_redshift_cluster" "snapshot_fail" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted  = true
@@ -310,12 +293,6 @@ resource "aws_redshift_cluster" "snapshot_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.pass.name
 
   automated_snapshot_retention_period = 1 # intentional violation
-
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-snapshot-fail"
@@ -337,7 +314,7 @@ resource "aws_redshift_cluster" "logging_fail" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted  = true
@@ -354,10 +331,6 @@ resource "aws_redshift_cluster" "logging_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.pass.name
 
   automated_snapshot_retention_period = 7
-
-  logging {
-    enable = false # intentional violation
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-logging-fail"
@@ -379,7 +352,7 @@ resource "aws_redshift_cluster" "vpc_routing_fail" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted  = true
@@ -396,12 +369,6 @@ resource "aws_redshift_cluster" "vpc_routing_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.pass.name
 
   automated_snapshot_retention_period = 7
-
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-vpc-routing-fail"
@@ -423,7 +390,7 @@ resource "aws_redshift_cluster" "admin_fail" {
   number_of_nodes    = 2
 
   master_username = "awsuser" # intentional violation — Redshift default username
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "appdb"
 
   encrypted  = true
@@ -440,12 +407,6 @@ resource "aws_redshift_cluster" "admin_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.pass.name
 
   automated_snapshot_retention_period = 7
-
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-admin-fail"
@@ -467,7 +428,7 @@ resource "aws_redshift_cluster" "dbname_fail" {
   number_of_nodes    = 2
 
   master_username = "clusteradmin"
-  master_password = "Ch@ngeMe2024!"
+  master_password = "ChangeMe2024!"
   database_name   = "dev" # intentional violation — Redshift default database name
 
   encrypted  = true
@@ -484,12 +445,6 @@ resource "aws_redshift_cluster" "dbname_fail" {
   cluster_parameter_group_name = aws_redshift_parameter_group.pass.name
 
   automated_snapshot_retention_period = 7
-
-  logging {
-    enable        = true
-    bucket_name   = aws_s3_bucket.audit_logs.bucket
-    s3_key_prefix = "redshift/"
-  }
 
   tags = merge(var.tags, {
     Name            = "regression-test-dbname-fail"

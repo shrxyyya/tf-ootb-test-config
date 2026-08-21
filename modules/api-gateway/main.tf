@@ -85,11 +85,15 @@ resource "aws_api_gateway_stage" "pass" {
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api.arn
+    format          = "$context.requestId $context.status $context.httpMethod $context.resourcePath $context.responseLength"
   }
 
-  web_acl_arn = var.wafv2_web_acl_arn
-
   tags = var.tags
+}
+
+resource "aws_api_gateway_stage_web_acl_association" "pass" {
+  resource_arn = aws_api_gateway_stage.pass.arn
+  web_acl_arn  = var.wafv2_web_acl_arn
 }
 
 resource "aws_api_gateway_method_settings" "pass" {
@@ -119,7 +123,6 @@ resource "aws_api_gateway_stage" "logging_fail" {
   xray_tracing_enabled  = true
   cache_cluster_enabled = true
   cache_cluster_size    = "0.5"
-  web_acl_arn           = var.wafv2_web_acl_arn
 
   # intentional violation: no access_log_settings, execution logging=OFF via method settings
 
@@ -158,10 +161,10 @@ resource "aws_api_gateway_stage" "xray_fail" {
   xray_tracing_enabled  = false # intentional violation
   cache_cluster_enabled = true
   cache_cluster_size    = "0.5"
-  web_acl_arn           = var.wafv2_web_acl_arn
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api.arn
+    format          = "$context.requestId $context.status $context.httpMethod $context.resourcePath $context.responseLength"
   }
 
   tags = merge(var.tags, {
@@ -203,6 +206,7 @@ resource "aws_api_gateway_stage" "waf_fail" {
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api.arn
+    format          = "$context.requestId $context.status $context.httpMethod $context.resourcePath $context.responseLength"
   }
 
   tags = merge(var.tags, {
@@ -240,10 +244,10 @@ resource "aws_api_gateway_stage" "cache_fail" {
   xray_tracing_enabled  = true
   cache_cluster_enabled = true
   cache_cluster_size    = "0.5"
-  web_acl_arn           = var.wafv2_web_acl_arn
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api.arn
+    format          = "$context.requestId $context.status $context.httpMethod $context.resourcePath $context.responseLength"
   }
 
   tags = merge(var.tags, {

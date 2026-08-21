@@ -140,6 +140,7 @@ resource "aws_fsx_ontap_file_system" "singleaz_fail" {
 
   storage_capacity    = 1024
   subnet_ids          = [var.private_subnet_ids[0]]
+  preferred_subnet_id = var.private_subnet_ids[0]
   deployment_type     = "SINGLE_AZ_1" # intentional violation
   throughput_capacity = 128
   kms_key_id          = var.kms_key_arn
