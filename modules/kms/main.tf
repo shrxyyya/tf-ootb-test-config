@@ -139,16 +139,17 @@ data "aws_iam_policy_document" "kms_decrypt_scoped" {
 
 resource "aws_iam_role" "kms_user_pass" {
   name               = "kms-user-pass"
-  description        = "Role with kms:Decrypt scoped to a specific key — compliant with KMS.1/KMS.2"
+  description        = "Role with kms:Decrypt scoped to a specific key - compliant with KMS.1/KMS.2"
   assume_role_policy = data.aws_iam_policy_document.kms_user_trust.json
   path               = "/"
 
-  inline_policy {
-    name   = "kms-decrypt-scoped"
-    policy = data.aws_iam_policy_document.kms_decrypt_scoped.json
-  }
-
   tags = var.tags
+}
+
+resource "aws_iam_role_policy" "kms_user_pass" {
+  name   = "kms-decrypt-scoped"
+  role   = aws_iam_role.kms_user_pass.id
+  policy = data.aws_iam_policy_document.kms_decrypt_scoped.json
 }
 
 # fail: kms:Decrypt on Resource = "*"
@@ -166,17 +167,20 @@ resource "aws_iam_role" "kms_user_fail" {
   count = var.create_failing_resources ? 1 : 0
 
   name               = "kms-user-fail"
-  description        = "Role with kms:Decrypt on * — intentional KMS.1/KMS.2 violation"
+  description        = "Role with kms:Decrypt on * - intentional KMS.1/KMS.2 violation"
   assume_role_policy = data.aws_iam_policy_document.kms_user_trust.json
   path               = "/"
-
-  inline_policy {
-    name   = "kms-decrypt-wildcard"
-    policy = data.aws_iam_policy_document.kms_decrypt_wildcard.json
-  }
 
   tags = merge(var.tags, {
     compliance_test = "intentional_violation"
     controls        = "KMS.1,KMS.2"
   })
+}
+
+resource "aws_iam_role_policy" "kms_user_fail" {
+  count = var.create_failing_resources ? 1 : 0
+
+  name   = "kms-decrypt-wildcard"
+  role   = aws_iam_role.kms_user_fail[0].id
+  policy = data.aws_iam_policy_document.kms_decrypt_wildcard.json
 }

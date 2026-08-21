@@ -8,13 +8,15 @@
 #   Inspector2.4 — Amazon Inspector Lambda code scanning should be enabled
 #
 # Singleton toggle: aws_inspector2_enabler is account-scoped.
-#   create_failing_resources = true  → resource_types = [] (nothing enabled — intentional violation)
-#   create_failing_resources = false → resource_types = ["EC2","ECR","LAMBDA","LAMBDA_CODE"] (pass)
+#   create_failing_resources = true  → resource omitted (Inspector not enabled — intentional violation)
+#   create_failing_resources = false → resource created with all four resource_types (pass)
 # ---------------------------------------------------------------------------
 
 data "aws_caller_identity" "current" {}
 
 resource "aws_inspector2_enabler" "main" {
+  count = var.create_failing_resources ? 0 : 1
+
   account_ids    = [data.aws_caller_identity.current.account_id]
-  resource_types = var.create_failing_resources ? [] : ["EC2", "ECR", "LAMBDA", "LAMBDA_CODE"]
+  resource_types = ["EC2", "ECR", "LAMBDA", "LAMBDA_CODE"]
 }

@@ -30,7 +30,8 @@ resource "aws_directory_service_directory" "main" {
 }
 
 data "aws_workspaces_bundle" "windows" {
-  bundle_id = "wsb-bh8rsxt14" # Standard with Windows 10 (Public)
+  owner = "AMAZON"
+  name  = "Standard with Windows 10 (Server 2019)"
 }
 
 # ---------------------------------------------------------------------------
