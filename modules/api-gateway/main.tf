@@ -91,7 +91,7 @@ resource "aws_api_gateway_stage" "pass" {
   tags = var.tags
 }
 
-resource "aws_api_gateway_stage_web_acl_association" "pass" {
+resource "aws_wafv2_web_acl_association" "pass" {
   resource_arn = aws_api_gateway_stage.pass.arn
   web_acl_arn  = var.wafv2_web_acl_arn
 }
