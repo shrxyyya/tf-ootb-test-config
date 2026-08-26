@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+provider "aws" {
+  region = "us-east-1"
+}
+
 # ---------------------------------------------------------------------------
 # ACM.1 — acm-pca-root-ca-disabled
 # Pass: ROOT CA — will be DISABLED after certificate issuance.
