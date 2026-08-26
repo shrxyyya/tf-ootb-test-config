@@ -221,41 +221,8 @@ module "opensearch" {
   kms_key_arn              = module.kms.shared_key_arn
 }
 
-# module "elasticsearch" {
-#   source = "./modules/elasticsearch"
-
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   private_subnet_cidrs     = var.private_subnet_cidrs
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
-
-# module "msk" {
-#   source = "./modules/msk"
-
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   private_subnet_cidrs     = var.private_subnet_cidrs
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
-
-# module "neptune" {
-#   source = "./modules/neptune"
-
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   private_subnet_cidrs     = var.private_subnet_cidrs
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
-
-module "docdb" {
-  source = "./modules/docdb"
+module "elasticsearch" {
+  source = "./modules/elasticsearch"
 
   create_failing_resources = var.create_failing_resources
   tags                     = var.tags
@@ -264,6 +231,39 @@ module "docdb" {
   private_subnet_cidrs     = var.private_subnet_cidrs
   kms_key_arn              = module.kms.shared_key_arn
 }
+
+module "msk" {
+  source = "./modules/msk"
+
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  private_subnet_cidrs     = var.private_subnet_cidrs
+  kms_key_arn              = module.kms.shared_key_arn
+}
+
+module "neptune" {
+  source = "./modules/neptune"
+
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  private_subnet_cidrs     = var.private_subnet_cidrs
+  kms_key_arn              = module.kms.shared_key_arn
+}
+
+# module "docdb" {
+#   source = "./modules/docdb"
+
+#   create_failing_resources = var.create_failing_resources
+#   tags                     = var.tags
+#   vpc_id                   = aws_vpc.main.id
+#   private_subnet_ids       = aws_subnet.private[*].id
+#   private_subnet_cidrs     = var.private_subnet_cidrs
+#   kms_key_arn              = module.kms.shared_key_arn
+# }
 
 module "elasticache" {
   source = "./modules/elasticache"
