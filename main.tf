@@ -13,12 +13,12 @@ module "kms" {
   tags                     = var.tags
 }
 
-# module "iam" {
-#   source = "./modules/iam"
+module "iam" {
+  source = "./modules/iam"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
 # module "s3" {
 #   source = "./modules/s3"
@@ -31,27 +31,27 @@ module "kms" {
 # # Tier 2 — Core compute/network (depend on kms + iam)
 # # ---------------------------------------------------------------------------
 
-# module "ec2" {
-#   source = "./modules/ec2"
+module "ec2" {
+  source = "./modules/ec2"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   public_subnet_ids        = aws_subnet.public[*].id
-#   availability_zones       = var.availability_zones
-#   instance_profile_name    = module.iam.ec2_instance_profile_name
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  public_subnet_ids        = aws_subnet.public[*].id
+  availability_zones       = var.availability_zones
+  instance_profile_name    = module.iam.ec2_instance_profile_name
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "cloudtrail" {
-#   source = "./modules/cloudtrail"
+module "cloudtrail" {
+  source = "./modules/cloudtrail"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-#   cloudwatch_role_arn      = module.iam.cloudtrail_cloudwatch_role_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+  cloudwatch_role_arn      = module.iam.cloudtrail_cloudwatch_role_arn
+}
 
 module "rds" {
   source = "./modules/rds"
@@ -78,16 +78,16 @@ module "eks" {
   eks_node_role_arn        = module.iam.eks_node_role_arn
 }
 
-# module "lambda" {
-#   source = "./modules/lambda"
+module "lambda" {
+  source = "./modules/lambda"
 
-#   create_failing_resources  = var.create_failing_resources
-#   tags                      = var.tags
-#   vpc_id                    = aws_vpc.main.id
-#   private_subnet_ids        = aws_subnet.private[*].id
-#   kms_key_arn               = module.kms.shared_key_arn
-#   lambda_execution_role_arn = module.iam.lambda_execution_role_arn
-# }
+  create_failing_resources  = var.create_failing_resources
+  tags                      = var.tags
+  vpc_id                    = aws_vpc.main.id
+  private_subnet_ids        = aws_subnet.private[*].id
+  kms_key_arn               = module.kms.shared_key_arn
+  lambda_execution_role_arn = module.iam.lambda_execution_role_arn
+}
 
 # # ---------------------------------------------------------------------------
 # # Tier 3 — ELB + WAF (depend on s3; WAF needs ELB ARN)
