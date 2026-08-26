@@ -6,19 +6,6 @@
 # Tier 1 — Foundation (no cross-module inputs)
 # ---------------------------------------------------------------------------
 
-# terraform {
-#   required_providers {
-#     aws = {
-#       source  = "hashicorp/aws"
-#       version = ">= 5.0"
-#     }
-#   }
-# }
-
-provider "aws" {
-  region = "us-east-1"
-}
-
 module "kms" {
   source = "./modules/kms"
 
