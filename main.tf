@@ -367,94 +367,94 @@ module "sagemaker" {
 # # Storage
 # # ---------------------------------------------------------------------------
 
-# module "backup" {
-#   source = "./modules/backup"
+module "backup" {
+  source = "./modules/backup"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "efs" {
-#   source = "./modules/efs"
+module "efs" {
+  source = "./modules/efs"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "fsx" {
-#   source = "./modules/fsx"
+module "fsx" {
+  source = "./modules/fsx"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "ecr" {
-#   source = "./modules/ecr"
+module "ecr" {
+  source = "./modules/ecr"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
 # # ---------------------------------------------------------------------------
 # # Orchestration + events
 # # ---------------------------------------------------------------------------
 
-# module "stepfunction" {
-#   source = "./modules/stepfunction"
+module "stepfunction" {
+  source = "./modules/stepfunction"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "eventbridge" {
-#   source = "./modules/eventbridge"
+module "eventbridge" {
+  source = "./modules/eventbridge"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
 # # ---------------------------------------------------------------------------
 # # Network + security services
 # # ---------------------------------------------------------------------------
 
-# module "network_firewall" {
-#   source = "./modules/network-firewall"
+module "network_firewall" {
+  source = "./modules/network-firewall"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "guardduty" {
-#   source = "./modules/guardduty"
+module "guardduty" {
+  source = "./modules/guardduty"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
-# module "inspector" {
-#   source = "./modules/inspector"
+module "inspector" {
+  source = "./modules/inspector"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
-# module "macie" {
-#   source = "./modules/macie"
+module "macie" {
+  source = "./modules/macie"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
 # # ---------------------------------------------------------------------------
 # # Application + middleware services
