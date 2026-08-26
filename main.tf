@@ -179,15 +179,15 @@ module "redshift" {
   kms_key_arn              = module.kms.shared_key_arn
 }
 
-module "redshift_serverless" {
-  source = "./modules/redshiftserverless"
+# module "redshift_serverless" {
+#   source = "./modules/redshiftserverless"
 
-  create_failing_resources = var.create_failing_resources
-  tags                     = var.tags
-  vpc_id                   = aws_vpc.main.id
-  private_subnet_ids       = aws_subnet.private[*].id
-  kms_key_arn              = module.kms.shared_key_arn
-}
+#   create_failing_resources = var.create_failing_resources
+#   tags                     = var.tags
+#   vpc_id                   = aws_vpc.main.id
+#   private_subnet_ids       = aws_subnet.private[*].id
+#   kms_key_arn              = module.kms.shared_key_arn
+# }
 
 # module "dynamo_db" {
 #   source = "./modules/dynamo-db"
