@@ -20,12 +20,12 @@ module "iam" {
   tags                     = var.tags
 }
 
-# module "s3" {
-#   source = "./modules/s3"
+module "s3" {
+  source = "./modules/s3"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
 # # ---------------------------------------------------------------------------
 # # Tier 2 — Core compute/network (depend on kms + iam)
@@ -93,25 +93,25 @@ module "lambda" {
 # # Tier 3 — ELB + WAF (depend on s3; WAF needs ELB ARN)
 # # ---------------------------------------------------------------------------
 
-# module "elb" {
-#   source = "./modules/elb"
+module "elb" {
+  source = "./modules/elb"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   public_subnet_ids        = aws_subnet.public[*].id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   logs_bucket_id           = module.s3.logs_bucket_id
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  public_subnet_ids        = aws_subnet.public[*].id
+  private_subnet_ids       = aws_subnet.private[*].id
+  logs_bucket_id           = module.s3.logs_bucket_id
+}
 
-# module "waf" {
-#   source = "./modules/waf"
+module "waf" {
+  source = "./modules/waf"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   alb_arn                  = module.elb.alb_arn
-#   logs_bucket_arn          = module.s3.logs_bucket_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  alb_arn                  = module.elb.alb_arn
+  logs_bucket_arn          = module.s3.logs_bucket_arn
+}
 
 # # ---------------------------------------------------------------------------
 # # Tier 4 — ECS (depends on kms + iam + ec2)
@@ -133,36 +133,36 @@ module "ecs" {
 # # Tier 5 — Services depending on elb + waf + s3 + kms + iam
 # # ---------------------------------------------------------------------------
 
-# module "cloudfront" {
-#   source = "./modules/cloudfront"
+module "cloudfront" {
+  source = "./modules/cloudfront"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   logs_bucket_id           = module.s3.logs_bucket_id
-#   wafv2_web_acl_arn        = module.waf.wafv2_web_acl_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  logs_bucket_id           = module.s3.logs_bucket_id
+  wafv2_web_acl_arn        = module.waf.wafv2_web_acl_arn
+}
 
-# module "api_gateway" {
-#   source = "./modules/api-gateway"
+module "api_gateway" {
+  source = "./modules/api-gateway"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   wafv2_web_acl_arn        = module.waf.wafv2_web_acl_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  wafv2_web_acl_arn        = module.waf.wafv2_web_acl_arn
+}
 
-# module "autoscaling_group" {
-#   source = "./modules/autoscaling-group"
+module "autoscaling_group" {
+  source = "./modules/autoscaling-group"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   public_subnet_ids        = aws_subnet.public[*].id
-#   availability_zones       = var.availability_zones
-#   kms_key_arn              = module.kms.shared_key_arn
-#   target_group_arn         = module.elb.target_group_arn
-#   instance_profile_name    = module.iam.ec2_instance_profile_name
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  public_subnet_ids        = aws_subnet.public[*].id
+  availability_zones       = var.availability_zones
+  kms_key_arn              = module.kms.shared_key_arn
+  target_group_arn         = module.elb.target_group_arn
+  instance_profile_name    = module.iam.ec2_instance_profile_name
+}
 
 # # ---------------------------------------------------------------------------
 # # Data services
