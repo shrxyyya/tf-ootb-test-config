@@ -200,15 +200,15 @@ module "dynamo_db" {
   kms_key_arn              = module.kms.shared_key_arn
 }
 
-# module "kinesis" {
-#   source = "./modules/kinesis"
+module "kinesis" {
+  source = "./modules/kinesis"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-#   logs_bucket_id           = module.s3.logs_bucket_id
-#   logs_bucket_arn          = module.s3.logs_bucket_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+  logs_bucket_id           = module.s3.logs_bucket_id
+  logs_bucket_arn          = module.s3.logs_bucket_arn
+}
 
 module "opensearch" {
   source = "./modules/opensearch"
@@ -221,38 +221,38 @@ module "opensearch" {
   kms_key_arn              = module.kms.shared_key_arn
 }
 
-module "elasticsearch" {
-  source = "./modules/elasticsearch"
+# module "elasticsearch" {
+#   source = "./modules/elasticsearch"
 
-  create_failing_resources = var.create_failing_resources
-  tags                     = var.tags
-  vpc_id                   = aws_vpc.main.id
-  private_subnet_ids       = aws_subnet.private[*].id
-  private_subnet_cidrs     = var.private_subnet_cidrs
-  kms_key_arn              = module.kms.shared_key_arn
-}
+#   create_failing_resources = var.create_failing_resources
+#   tags                     = var.tags
+#   vpc_id                   = aws_vpc.main.id
+#   private_subnet_ids       = aws_subnet.private[*].id
+#   private_subnet_cidrs     = var.private_subnet_cidrs
+#   kms_key_arn              = module.kms.shared_key_arn
+# }
 
-module "msk" {
-  source = "./modules/msk"
+# module "msk" {
+#   source = "./modules/msk"
 
-  create_failing_resources = var.create_failing_resources
-  tags                     = var.tags
-  vpc_id                   = aws_vpc.main.id
-  private_subnet_ids       = aws_subnet.private[*].id
-  private_subnet_cidrs     = var.private_subnet_cidrs
-  kms_key_arn              = module.kms.shared_key_arn
-}
+#   create_failing_resources = var.create_failing_resources
+#   tags                     = var.tags
+#   vpc_id                   = aws_vpc.main.id
+#   private_subnet_ids       = aws_subnet.private[*].id
+#   private_subnet_cidrs     = var.private_subnet_cidrs
+#   kms_key_arn              = module.kms.shared_key_arn
+# }
 
-module "neptune" {
-  source = "./modules/neptune"
+# module "neptune" {
+#   source = "./modules/neptune"
 
-  create_failing_resources = var.create_failing_resources
-  tags                     = var.tags
-  vpc_id                   = aws_vpc.main.id
-  private_subnet_ids       = aws_subnet.private[*].id
-  private_subnet_cidrs     = var.private_subnet_cidrs
-  kms_key_arn              = module.kms.shared_key_arn
-}
+#   create_failing_resources = var.create_failing_resources
+#   tags                     = var.tags
+#   vpc_id                   = aws_vpc.main.id
+#   private_subnet_ids       = aws_subnet.private[*].id
+#   private_subnet_cidrs     = var.private_subnet_cidrs
+#   kms_key_arn              = module.kms.shared_key_arn
+# }
 
 module "docdb" {
   source = "./modules/docdb"
