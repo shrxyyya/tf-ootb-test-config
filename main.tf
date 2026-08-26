@@ -280,29 +280,29 @@ module "docdb" {
 # # Messaging + secrets
 # # ---------------------------------------------------------------------------
 
-# module "secretsmanager" {
-#   source = "./modules/secretsmanager"
+module "secretsmanager" {
+  source = "./modules/secretsmanager"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "sqs" {
-#   source = "./modules/sqs"
+module "sqs" {
+  source = "./modules/sqs"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "sns" {
-#   source = "./modules/sns"
+module "sns" {
+  source = "./modules/sns"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
 # # ---------------------------------------------------------------------------
 # # Developer / analytics services
