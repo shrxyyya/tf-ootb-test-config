@@ -53,30 +53,30 @@ module "kms" {
 #   cloudwatch_role_arn      = module.iam.cloudtrail_cloudwatch_role_arn
 # }
 
-# module "rds" {
-#   source = "./modules/rds"
+module "rds" {
+  source = "./modules/rds"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   availability_zones       = var.availability_zones
-#   kms_key_arn              = module.kms.shared_key_arn
-#   rds_monitoring_role_arn  = module.iam.rds_monitoring_role_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  availability_zones       = var.availability_zones
+  kms_key_arn              = module.kms.shared_key_arn
+  rds_monitoring_role_arn  = module.iam.rds_monitoring_role_arn
+}
 
-# module "eks" {
-#   source = "./modules/eks"
+module "eks" {
+  source = "./modules/eks"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   availability_zones       = var.availability_zones
-#   kms_key_arn              = module.kms.shared_key_arn
-#   eks_cluster_role_arn     = module.iam.eks_cluster_role_arn
-#   eks_node_role_arn        = module.iam.eks_node_role_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  availability_zones       = var.availability_zones
+  kms_key_arn              = module.kms.shared_key_arn
+  eks_cluster_role_arn     = module.iam.eks_cluster_role_arn
+  eks_node_role_arn        = module.iam.eks_node_role_arn
+}
 
 # module "lambda" {
 #   source = "./modules/lambda"
@@ -117,17 +117,17 @@ module "kms" {
 # # Tier 4 — ECS (depends on kms + iam + ec2)
 # # ---------------------------------------------------------------------------
 
-# module "ecs" {
-#   source = "./modules/ecs"
+module "ecs" {
+  source = "./modules/ecs"
 
-#   create_failing_resources    = var.create_failing_resources
-#   tags                        = var.tags
-#   vpc_id                      = aws_vpc.main.id
-#   private_subnet_ids          = aws_subnet.private[*].id
-#   kms_key_arn                 = module.kms.shared_key_arn
-#   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
-#   app_security_group_id       = module.ec2.app_security_group_id
-# }
+  create_failing_resources    = var.create_failing_resources
+  tags                        = var.tags
+  vpc_id                      = aws_vpc.main.id
+  private_subnet_ids          = aws_subnet.private[*].id
+  kms_key_arn                 = module.kms.shared_key_arn
+  ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
+  app_security_group_id       = module.ec2.app_security_group_id
+}
 
 # # ---------------------------------------------------------------------------
 # # Tier 5 — Services depending on elb + waf + s3 + kms + iam
