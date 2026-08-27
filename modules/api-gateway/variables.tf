@@ -13,4 +13,5 @@ variable "tags" {
 variable "wafv2_web_acl_arn" {
   description = "ARN of the WAFv2 Web ACL to associate with the pass API Gateway stage (provided by the WAF module)."
   type        = string
+  default = ""
 }
