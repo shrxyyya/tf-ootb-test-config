@@ -493,24 +493,24 @@ module "dms" {
   private_subnet_ids       = aws_subnet.private[*].id
 }
 
-# module "transfer" {
-#   source = "./modules/transfer"
+module "transfer" {
+  source = "./modules/transfer"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+}
 
-# module "elasticbeanstalk" {
-#   source = "./modules/elasticbeanstalk"
+module "elasticbeanstalk" {
+  source = "./modules/elasticbeanstalk"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-#   instance_profile_name    = module.iam.ec2_instance_profile_name
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+  instance_profile_name    = module.iam.ec2_instance_profile_name
+}
 
 # # ---------------------------------------------------------------------------
 # # Specialist / global services
