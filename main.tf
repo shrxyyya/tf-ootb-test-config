@@ -460,38 +460,38 @@ module "macie" {
 # # Application + middleware services
 # # ---------------------------------------------------------------------------
 
-# module "appsync" {
-#   source = "./modules/appsync"
+module "appsync" {
+  source = "./modules/appsync"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   kms_key_arn              = module.kms.shared_key_arn
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  kms_key_arn              = module.kms.shared_key_arn
+}
 
-# module "mq" {
-#   source = "./modules/mq"
+module "mq" {
+  source = "./modules/mq"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+}
 
-# module "connect" {
-#   source = "./modules/connect"
+module "connect" {
+  source = "./modules/connect"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+}
 
-# module "dms" {
-#   source = "./modules/dms"
+module "dms" {
+  source = "./modules/dms"
 
-#   create_failing_resources = var.create_failing_resources
-#   tags                     = var.tags
-#   vpc_id                   = aws_vpc.main.id
-#   private_subnet_ids       = aws_subnet.private[*].id
-# }
+  create_failing_resources = var.create_failing_resources
+  tags                     = var.tags
+  vpc_id                   = aws_vpc.main.id
+  private_subnet_ids       = aws_subnet.private[*].id
+}
 
 # module "transfer" {
 #   source = "./modules/transfer"
